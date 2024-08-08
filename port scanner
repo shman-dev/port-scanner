@@ -1,0 +1,25 @@
+import socket
+
+# Taking input from the user
+target_ipaddress = input("Enter the IP address: ")
+host = input("Enter the host: ")
+
+def scan_port(port):
+    try:
+        # Creating a socket object
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Setting a timeout for the connection attempt
+        s.settimeout(1)
+        # Trying to connect to the port
+        result = s.connect_ex((target_ipaddress, port))
+        # If result is 0, the port is open
+        if result == 0:
+            print(f"Port {port} is open")
+        # Closing the socket
+        s.close()
+    except socket.error as e:
+        print(f"Error: {e}")
+
+# Scanning ports in the given range
+for port in range(0, 2000):
+    scan_port(port)
